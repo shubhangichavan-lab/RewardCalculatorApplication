@@ -1,0 +1,44 @@
+package com.retail.reward;
+
+import com.retail.reward.model.Rewards;
+import com.retail.reward.repository.TransactionRepository;
+import com.retail.reward.service.RewardService;
+import com.retail.reward.service.RewardServiceImpl;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class RewardServiceTest {
+    @Mock
+    TransactionRepository transactionRepo;
+    @InjectMocks
+    RewardService rewardService=new RewardServiceImpl();
+
+    @Test
+    void getRewardProgramByCustomerIdTest(){
+        Rewards rewards=new Rewards();
+        rewards.setCustomerId(1002L);
+        rewards.setLastMonthRewardPoints(956L);
+        rewards.setLastSecondMonthRewardPoints(434L);
+        rewards.setLastThirdMonthRewardPoints(0L);
+        rewards.setTotalRewards(1390L);
+        when(rewardService.getRewardProgramByCustomerId(1002L)).thenReturn(rewards);
+         assertEquals(rewards, rewardService.getRewardProgramByCustomerId(1002L));
+         assertEquals(rewards.getCustomerId(),rewardService.getRewardProgramByCustomerId(1002L).getCustomerId());
+         assertEquals(rewards.getLastMonthRewardPoints(),rewardService.getRewardProgramByCustomerId(1002L).getLastMonthRewardPoints());
+         assertEquals(rewards.getLastSecondMonthRewardPoints(),rewardService.getRewardProgramByCustomerId(1002L).getLastSecondMonthRewardPoints());
+         assertEquals(rewards.getLastThirdMonthRewardPoints(),rewardService.getRewardProgramByCustomerId(1002L).getLastThirdMonthRewardPoints());
+         assertEquals(rewards.getTotalRewards(),rewardService.getRewardProgramByCustomerId(1002L).getTotalRewards());
+
+    }
+
+}
